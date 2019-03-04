@@ -18,7 +18,7 @@ def model():
         strides=1,
         padding='valid',
         activation='relu',
-        input_shape=(None, None, 1)#大小不限
+        input_shape=(None, None, 1)  # 大小不限
     ))
     SRCNN.add(keras.layers.Convolution2D(
         filters=64,
@@ -48,6 +48,7 @@ def predict():
 
     import cv2
     img = cv2.imread(IMG_NAME, cv2.IMREAD_COLOR)
+    im1 = img
     img = cv2.cvtColor(img, cv2.COLOR_BGR2YCrCb)
     shape = img.shape
     Y_img = cv2.resize(img[:, :, 0], (shape[1] // imp.scale,
@@ -55,6 +56,7 @@ def predict():
     Y_img = cv2.resize(Y_img, (shape[1], shape[0]), cv2.INTER_CUBIC)
     img[:, :, 0] = Y_img
     img = cv2.cvtColor(img, cv2.COLOR_YCrCb2BGR)
+    im2 = img
     cv2.imwrite(INPUT_NAME, img)
 
     Y = npy.zeros((1, img.shape[0], img.shape[1], 1), dtype=float)
@@ -66,12 +68,8 @@ def predict():
     img = cv2.cvtColor(img, cv2.COLOR_BGR2YCrCb)
     img[imp.margin: -imp.margin, imp.margin: -imp.margin, 0] = pre[0, :, :, 0]
     img = cv2.cvtColor(img, cv2.COLOR_YCrCb2BGR)
+    im3 = img
     cv2.imwrite(OUTPUT_NAME, img)
-
-    # psnr calculation:
-    im1 = plt.imread(IMG_NAME)
-    im2 = plt.imread(INPUT_NAME)
-    im3 = plt.imread(OUTPUT_NAME)
 
     plt.figure(figsize=(20, 20))
     plt.subplot(1, 3, 1)
