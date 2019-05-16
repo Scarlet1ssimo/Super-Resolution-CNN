@@ -165,3 +165,17 @@ def train():
 ## 魔改时间
 
 莫得魔改（素质极差
+
+## 使用方法
+
+### 环境
+
+python3.6 with tensorflow 1.2应该不强求GPU
+依赖库缺啥装啥
+
+### 命令
+
+`train.py`：训练
+
+`export1.py [import] [export]`：将`[import]`图片放大成`[export]`文件导出，如`export Origin.jpg Super.jpg`，图片不能太大（其实仅限很小）
+
